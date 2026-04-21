@@ -53,3 +53,5 @@ data/raw/*.zip
 *.log
 *.tmp
 *.swp
+.env
+*.sqlite3
