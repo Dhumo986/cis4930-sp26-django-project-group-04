@@ -132,7 +132,7 @@
     </div>
 
     <script>
-        const chartData = {{ chart_json| safe }};
+        const chartData = JSON.parse('{{ chart_json|escapejs }}');
 
         new Chart(document.getElementById('popularityChart'), {
             type: 'bar',
