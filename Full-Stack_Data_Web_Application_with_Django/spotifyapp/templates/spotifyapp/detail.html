@@ -1,0 +1,56 @@
+{% extends 'spotifyapp/base.html' %}
+
+{% block title %}{{ track.track_name }} — Spotify Tracks{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="card-title">{{ track.track_name }}</h1>
+        <h2 class="h5 text-muted">{{ track.artists }}</h2>
+
+        <dl class="row mt-4">
+            <dt class="col-sm-3">Genre</dt>
+            <dd class="col-sm-9">{{ track.genre.name }}</dd>
+
+            <dt class="col-sm-3">Track ID</dt>
+            <dd class="col-sm-9"><code>{{ track.track_id }}</code></dd>
+
+            <dt class="col-sm-3">Popularity</dt>
+            <dd class="col-sm-9">{{ track.popularity }} / 100</dd>
+
+            <dt class="col-sm-3">Danceability</dt>
+            <dd class="col-sm-9">{{ track.danceability }}</dd>
+
+            <dt class="col-sm-3">Energy</dt>
+            <dd class="col-sm-9">{{ track.energy }}</dd>
+
+            <dt class="col-sm-3">Valence</dt>
+            <dd class="col-sm-9">{{ track.valence }}</dd>
+
+            <dt class="col-sm-3">Tempo</dt>
+            <dd class="col-sm-9">{{ track.tempo }} BPM</dd>
+
+            <dt class="col-sm-3">Loudness</dt>
+            <dd class="col-sm-9">{{ track.loudness }} dB</dd>
+
+            <dt class="col-sm-3">Duration</dt>
+            <dd class="col-sm-9">{{ track.duration_ms }} ms</dd>
+
+            <dt class="col-sm-3">Explicit</dt>
+            <dd class="col-sm-9">{% if track.explicit %}Yes{% else %}No{% endif %}</dd>
+
+            <dt class="col-sm-3">Source</dt>
+            <dd class="col-sm-9">{{ track.get_source_display }}</dd>
+
+            <dt class="col-sm-3">Created</dt>
+            <dd class="col-sm-9">{{ track.created_at }}</dd>
+        </dl>
+
+        <div class="d-flex gap-2">
+            <a class="btn btn-outline-secondary" href="{% url 'track_list' %}">Back to list</a>
+            <a class="btn btn-primary" href="{% url 'track_update' track.pk %}">Edit</a>
+            <a class="btn btn-outline-danger" href="{% url 'track_delete' track.pk %}">Delete</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
