@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Spotify Tracks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 2rem;
+            background: #f7f8fa;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+        }
+
+        form {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.6rem;
+            border: 1px solid #d6d9de;
+            border-radius: 6px;
+        }
+
+        button,
+        .link-btn {
+            border: none;
+            padding: 0.6rem 0.9rem;
+            border-radius: 6px;
+            background: #1db954;
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th,
+        td {
+            text-align: left;
+            padding: 0.65rem;
+            border-bottom: 1px solid #eef0f2;
+        }
+
+        th {
+            background: #fafbfc;
+        }
+
+        .muted {
+            color: #6b7280;
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <h1>Track List</h1>
+        <a class="link-btn" href="/analytics/">View Analytics</a>
+    </div>
+
+    <div class="card">
+        <form method="get">
+            <input type="text" name="q" value="{{ query }}" placeholder="Search by track name or artist..." />
+            <button type="submit">Search</button>
+        </form>
+
+        <p class="muted">Showing {{ total_count }} matching tracks (displaying first 200).</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Track</th>
+                    <th>Artist(s)</th>
+                    <th>Genre</th>
+                    <th>Popularity</th>
+                    <th>Energy</th>
+                    <th>Danceability</th>
+                    <th>Explicit</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for track in tracks %}
+                <tr>
+                    <td>{{ track.track_name }}</td>
+                    <td>{{ track.artists }}</td>
+                    <td>{{ track.genre.name }}</td>
+                    <td>{{ track.popularity }}</td>
+                    <td>{{ track.energy }}</td>
+                    <td>{{ track.danceability }}</td>
+                    <td>{% if track.explicit %}Yes{% else %}No{% endif %}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="7">No tracks found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
