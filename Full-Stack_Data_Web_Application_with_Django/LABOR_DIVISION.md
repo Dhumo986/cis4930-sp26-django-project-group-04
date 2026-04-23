@@ -14,7 +14,7 @@
 | `settings-deploy` | Dhruv | ✅ Done |
 | `api-integration` | Dhruv | ⏳ In Progress |
 | `crud-views` | Thomas | ✅ Done |
-| `bootstrap-ui` | Thomas | ⏳ In Progress |
+| `bootstrap-ui` | Thomas | ✅ Done |
 | `analytics-dashboard` | Imran | ❌ Not Started |
 | Search bar bonus | Imran | ❌ Not Started |
 
