@@ -180,3 +180,36 @@ def track_delete(request, pk):
         track.delete()
         return redirect('track_list')
     return render(request, 'spotifyapp/confirm_delete.html', {'track': track})
+
+
+from django.http import JsonResponse
+
+def api_records(request):
+    genre = request.GET.get('genre', '').strip()
+    tracks = Track.objects.select_related('genre').all()
+
+    if genre:
+        tracks = tracks.filter(genre__name__icontains=genre)
+
+    tracks = tracks[:100]
+
+    data = [
+        {
+            'id': t.id,
+            'track_name': t.track_name,
+            'artists': t.artists,
+            'genre': t.genre.name,
+            'popularity': t.popularity,
+            'danceability': t.danceability,
+            'energy': t.energy,
+            'tempo': t.tempo,
+            'loudness': t.loudness,
+            'valence': t.valence,
+            'duration_ms': t.duration_ms,
+            'explicit': t.explicit,
+            'source': t.source,
+        }
+        for t in tracks
+    ]
+
+    return JsonResponse({'count': len(data), 'results': data})
