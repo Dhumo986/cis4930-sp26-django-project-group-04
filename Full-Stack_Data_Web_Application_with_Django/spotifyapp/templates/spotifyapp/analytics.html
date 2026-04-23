@@ -1,172 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'spotifyapp/base.html' %}
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Analytics Dashboard</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 2rem;
-            background: #f7f8fa;
+{% block title %}Analytics — Spotify Tracks{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const chartData = JSON.parse('{{ chart_json|escapejs }}');
+
+    new Chart(document.getElementById('popularityChart'), {
+        type: 'bar',
+        data: {
+            labels: chartData.popularity_by_genre.labels,
+            datasets: [{
+                label: 'Avg Popularity',
+                data: chartData.popularity_by_genre.values,
+                backgroundColor: 'rgba(29, 185, 84, 0.75)',
+                borderColor: 'rgba(29, 185, 84, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: { y: { beginAtZero: true, max: 100 } }
         }
+    });
 
-        h1,
-        h2 {
-            margin-bottom: 0.75rem;
-        }
+    new Chart(document.getElementById('explicitChart'), {
+        type: 'doughnut',
+        data: {
+            labels: chartData.explicit_popularity.labels,
+            datasets: [{
+                label: 'Avg Popularity',
+                data: chartData.explicit_popularity.values,
+                backgroundColor: ['#60a5fa', '#f97316']
+            }]
+        },
+        options: { responsive: true }
+    });
+</script>
+{% endblock %}
 
-        .top-link {
-            display: inline-block;
-            margin-bottom: 1rem;
-            text-decoration: none;
-            background: #1db954;
-            color: #fff;
-            padding: 0.55rem 0.9rem;
-            border-radius: 6px;
-        }
+{% block content %}
+<h1 class="mb-4">Spotify Analytics Dashboard</h1>
 
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1rem;
-        }
-
-        .card {
-            background: #fff;
-            border-radius: 10px;
-            padding: 1rem;
-            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
-            margin-bottom: 1rem;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        th,
-        td {
-            text-align: left;
-            padding: 0.6rem;
-            border-bottom: 1px solid #eceff3;
-        }
-
-        th {
-            background: #fafbfc;
-        }
-    </style>
-</head>
-
-<body>
-    <a class="top-link" href="/">Back to Tracks</a>
-    <h1>Spotify Analytics Dashboard</h1>
-
-    <div class="grid">
-        <div class="card">
-            <h2>Average Popularity by Genre</h2>
-            <canvas id="popularityChart"></canvas>
-        </div>
-        <div class="card">
-            <h2>Explicit vs Non-Explicit Popularity</h2>
-            <canvas id="explicitChart"></canvas>
+<div class="row g-3 mb-3">
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="h5 mb-3">Average Popularity by Genre</h2>
+                <canvas id="popularityChart"></canvas>
+            </div>
         </div>
     </div>
-
-    <div class="card">
-        <h2>Average Energy and Danceability by Genre</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Genre</th>
-                    <th>Avg Energy</th>
-                    <th>Avg Danceability</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in energy_dance_by_genre %}
-                <tr>
-                    <td>{{ row.genre__name }}</td>
-                    <td>{{ row.energy }}</td>
-                    <td>{{ row.danceability }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="3">No data available.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+    <div class="col-md-6">
+        <div class="card shadow-sm h-100">
+            <div class="card-body">
+                <h2 class="h5 mb-3">Explicit vs Non-Explicit Popularity</h2>
+                <canvas id="explicitChart"></canvas>
+            </div>
+        </div>
     </div>
+</div>
 
-    <div class="card">
-        <h2>Summary Stats</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Metric</th>
-                    <th>Count</th>
-                    <th>Mean</th>
-                    <th>Min</th>
-                    <th>Max</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for row in summary_stats %}
-                <tr>
-                    <td>{{ row.metric }}</td>
-                    <td>{{ row.count }}</td>
-                    <td>{{ row.mean }}</td>
-                    <td>{{ row.min }}</td>
-                    <td>{{ row.max }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="5">No data available.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="card shadow-sm mb-3">
+    <div class="card-body">
+        <h2 class="h5 mb-3">Average Energy and Danceability by Genre</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0 align-middle">
+                <thead>
+                    <tr>
+                        <th>Genre</th>
+                        <th class="text-end">Avg Energy</th>
+                        <th class="text-end">Avg Danceability</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in energy_dance_by_genre %}
+                    <tr>
+                        <td>{{ row.genre__name }}</td>
+                        <td class="text-end">{{ row.energy }}</td>
+                        <td class="text-end">{{ row.danceability }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3" class="text-center text-muted py-4">No data available.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
+</div>
 
-    <script>
-        const chartData = JSON.parse('{{ chart_json|escapejs }}');
-
-        new Chart(document.getElementById('popularityChart'), {
-            type: 'bar',
-            data: {
-                labels: chartData.popularity_by_genre.labels,
-                datasets: [{
-                    label: 'Avg Popularity',
-                    data: chartData.popularity_by_genre.values,
-                    backgroundColor: 'rgba(29, 185, 84, 0.75)',
-                    borderColor: 'rgba(29, 185, 84, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                scales: {
-                    y: { beginAtZero: true, max: 100 }
-                }
-            }
-        });
-
-        new Chart(document.getElementById('explicitChart'), {
-            type: 'doughnut',
-            data: {
-                labels: chartData.explicit_popularity.labels,
-                datasets: [{
-                    label: 'Avg Popularity',
-                    data: chartData.explicit_popularity.values,
-                    backgroundColor: ['#60a5fa', '#f97316']
-                }]
-            },
-            options: { responsive: true }
-        });
-    </script>
-</body>
-
-</html>
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h2 class="h5 mb-3">Summary Stats</h2>
+        <div class="table-responsive">
+            <table class="table table-striped table-hover mb-0 align-middle">
+                <thead>
+                    <tr>
+                        <th>Metric</th>
+                        <th class="text-end">Count</th>
+                        <th class="text-end">Mean</th>
+                        <th class="text-end">Min</th>
+                        <th class="text-end">Max</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in summary_stats %}
+                    <tr>
+                        <td>{{ row.metric }}</td>
+                        <td class="text-end">{{ row.count }}</td>
+                        <td class="text-end">{{ row.mean }}</td>
+                        <td class="text-end">{{ row.min }}</td>
+                        <td class="text-end">{{ row.max }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="5" class="text-center text-muted py-4">No data available.</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
