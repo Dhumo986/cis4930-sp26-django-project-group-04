@@ -46,15 +46,16 @@
 - `spotifyapp/views.py` — `home`, `track_list` (paginated 20/page), `track_detail`, `track_create`, `track_update`, `track_delete`
 - `spotifyapp/urls.py` — all 6 CRUD routes wired; Imran's search view preserved at `/search/`
 
-### ⏳ In Progress (`bootstrap-ui`)
+### ✅ Completed (`bootstrap-ui`)
 - `spotifyapp/templates/spotifyapp/base.html` — Bootstrap 5 CDN, responsive navbar, blocks
 - `spotifyapp/templates/spotifyapp/home.html` — extends base, Bootstrap card
 - `spotifyapp/templates/spotifyapp/records_list.html` — extends base, `table-striped table-hover`, Paginator controls
 - `spotifyapp/templates/spotifyapp/detail.html` — extends base, info card
 - `spotifyapp/templates/spotifyapp/form.html` — extends base, shared by create/update
 - `spotifyapp/templates/spotifyapp/confirm_delete.html` — extends base, Bootstrap alert
+- `spotifyapp/templates/spotifyapp/list.html` — converted to extend base (preserves Imran's search context)
+- `spotifyapp/templates/spotifyapp/analytics.html` — converted to extend base (preserves Chart.js + context)
 - `spotifyapp/static/css/style.css` — 5+ overrides (navbar, brand accent, card shadow, row hover, pagination)
-- **Remaining:** Imran's `list.html` and `analytics.html` do not yet extend `base.html` — left untouched to avoid overwriting his work; needs a merge-conversation before conversion
 
 ### What you need to build:
 
