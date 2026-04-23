@@ -13,8 +13,8 @@
 | `models-orm` | Dhruv | ✅ Done |
 | `settings-deploy` | Dhruv | ✅ Done |
 | `api-integration` | Dhruv | ⏳ In Progress |
-| `crud-views` | Thomas | ❌ Not Started |
-| `bootstrap-ui` | Thomas | ❌ Not Started |
+| `crud-views` | Thomas | ✅ Done |
+| `bootstrap-ui` | Thomas | ✅ Done |
 | `analytics-dashboard` | Imran | ❌ Not Started |
 | Search bar bonus | Imran | ❌ Not Started |
 
@@ -40,6 +40,22 @@
 ## 🔵 Thomas Schmidt — Views, URLs, Bootstrap UI
 
 ### Branch: `crud-views` + `bootstrap-ui`
+
+### ✅ Completed (`crud-views`)
+- `spotifyapp/forms.py` — `TrackForm` (ModelForm, Bootstrap-styled widgets via `__init__`)
+- `spotifyapp/views.py` — `home`, `track_list` (paginated 20/page), `track_detail`, `track_create`, `track_update`, `track_delete`
+- `spotifyapp/urls.py` — all 6 CRUD routes wired; Imran's search view preserved at `/search/`
+
+### ✅ Completed (`bootstrap-ui`)
+- `spotifyapp/templates/spotifyapp/base.html` — Bootstrap 5 CDN, responsive navbar, blocks
+- `spotifyapp/templates/spotifyapp/home.html` — extends base, Bootstrap card
+- `spotifyapp/templates/spotifyapp/records_list.html` — extends base, `table-striped table-hover`, Paginator controls
+- `spotifyapp/templates/spotifyapp/detail.html` — extends base, info card
+- `spotifyapp/templates/spotifyapp/form.html` — extends base, shared by create/update
+- `spotifyapp/templates/spotifyapp/confirm_delete.html` — extends base, Bootstrap alert
+- `spotifyapp/templates/spotifyapp/list.html` — converted to extend base (preserves Imran's search context)
+- `spotifyapp/templates/spotifyapp/analytics.html` — converted to extend base (preserves Chart.js + context)
+- `spotifyapp/static/css/style.css` — 5+ overrides (navbar, brand accent, card shadow, row hover, pagination)
 
 ### What you need to build:
 

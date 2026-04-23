@@ -1,0 +1,22 @@
+{% extends 'spotifyapp/base.html' %}
+
+{% block title %}Delete {{ track.track_name }} — Spotify Tracks{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="card-title">Delete track?</h1>
+        <div class="alert alert-warning">
+            You are about to permanently delete <strong>{{ track.track_name }}</strong> by
+            <strong>{{ track.artists }}</strong>. This cannot be undone.
+        </div>
+        <form method="post">
+            {% csrf_token %}
+            <div class="d-flex gap-2">
+                <button type="submit" class="btn btn-danger">Confirm delete</button>
+                <a class="btn btn-outline-secondary" href="{% url 'track_detail' track.pk %}">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

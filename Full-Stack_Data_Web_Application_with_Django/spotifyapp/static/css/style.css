@@ -1,0 +1,67 @@
+:root {
+    --spotify-green: #1db954;
+    --spotify-green-dark: #159c43;
+}
+
+body {
+    background: #f6f8fa;
+    min-height: 100vh;
+}
+
+.app-navbar {
+    background: #121212;
+}
+
+.app-navbar .navbar-brand,
+.app-navbar .nav-link {
+    color: #ffffff;
+}
+
+.app-navbar .nav-link:hover {
+    color: var(--spotify-green);
+}
+
+.btn-accent {
+    background: var(--spotify-green);
+    border-radius: 999px;
+    padding: 0.35rem 1rem;
+    color: #ffffff !important;
+}
+
+.btn-accent:hover {
+    background: var(--spotify-green-dark);
+}
+
+.card {
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 2px 10px rgba(17, 24, 39, 0.06);
+}
+
+.table > :not(caption) > * > * {
+    padding: 0.85rem 1rem;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(29, 185, 84, 0.08);
+}
+
+.btn-success {
+    background: var(--spotify-green);
+    border-color: var(--spotify-green);
+}
+
+.btn-success:hover,
+.btn-success:focus {
+    background: var(--spotify-green-dark);
+    border-color: var(--spotify-green-dark);
+}
+
+.pagination .page-item.active .page-link {
+    background-color: var(--spotify-green);
+    border-color: var(--spotify-green);
+}
+
+.pagination .page-link {
+    color: var(--spotify-green-dark);
+}

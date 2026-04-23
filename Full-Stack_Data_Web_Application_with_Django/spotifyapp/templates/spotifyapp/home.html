@@ -1,0 +1,21 @@
+{% extends 'spotifyapp/base.html' %}
+
+{% block title %}Home — Spotify Tracks{% endblock %}
+
+{% block content %}
+<div class="card shadow-sm">
+    <div class="card-body">
+        <h1 class="card-title">Spotify Tracks Explorer</h1>
+        <p class="card-text lead">
+            Browse, search, and analyze a dataset of {{ stats.total_tracks }} Spotify tracks.
+            Each record captures audio features like popularity, energy, danceability, tempo,
+            and genre for data-driven exploration.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+            <a class="btn btn-success" href="{% url 'track_list' %}">Browse Records</a>
+            <a class="btn btn-outline-secondary" href="{% url 'analytics' %}">View Analytics</a>
+            <a class="btn btn-outline-primary" href="{% url 'track_create' %}">Add Track</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
